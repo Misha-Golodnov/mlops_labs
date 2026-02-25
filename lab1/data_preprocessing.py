@@ -85,7 +85,7 @@ if categorical_columns:
     logger.info("текстовые признаки переведены в чилосовой формат")
 
 # сохранение предобработанных данных
-df.to_csv("train_preprocessed.csv", index=False)
-df_test.to_csv("test_preprocessed.csv", index=False)
+df.to_csv("train.csv", index=False)
+df_test.to_csv("test.csv", index=False)
 logger.info(
     f"данные сохранены. Финальные размеры | обучение: {df.shape}, тест: {df_test.shape}")
