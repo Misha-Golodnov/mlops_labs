@@ -26,32 +26,43 @@ categorical_columns = df.select_dtypes(
 logger.info(f"числовые признаки: {numerical_columns}")
 logger.info(f"категориальные признаки: {categorical_columns}")
 
-# функция для поиска выбросов
-
-
-def IQR(df: pd.DataFrame, thr: int, features: list):
-    outlier_list = []
+# функция для вычисления границ IQR по данным (только для train)
+def compute_iqr_bounds(df: pd.DataFrame, features: list) -> dict:
+    """Вычисляет границы выбросов (Q1 - 1.5*IQR, Q3 + 1.5*IQR) для каждого признака."""
+    bounds = {}
     for column in features:
+        if column not in df.columns:
+            continue
         col_vals = df[column].dropna()
         Q1 = np.percentile(col_vals, 25)
         Q3 = np.percentile(col_vals, 75)
         iqr = Q3 - Q1
         outlier_step = 1.5 * iqr
-        outlier_list_column = df[(df[column] < Q1 - outlier_step)
-                                 | (df[column] > Q3 + outlier_step)].index.tolist()
+        bounds[column] = (Q1 - outlier_step, Q3 + outlier_step)
+    return bounds
+
+
+def find_outliers(df: pd.DataFrame, thr: int, features: list, bounds: dict) -> list:
+    """Находит индексы строк-выбросов по предвычисленным границам."""
+    outlier_list = []
+    for column in features:
+        if column not in bounds or column not in df.columns:
+            continue
+        lower, upper = bounds[column]
+        outlier_list_column = df[(df[column] < lower) | (df[column] > upper)].index.tolist()
         outlier_list.extend(outlier_list_column)
 
     outlier_counts = Counter(outlier_list)
     multiple_outliers = [k for k, v in outlier_counts.items() if v > thr]
-    logger.info(f'удалено выбросов: {len(multiple_outliers)}')
     return multiple_outliers
 
 
 # удаление выбросов
-Outliers_IQR = IQR(df, 1, numerical_columns)
+iqr_bounds = compute_iqr_bounds(df, numerical_columns)
+Outliers_IQR = find_outliers(df, 1, numerical_columns, iqr_bounds)
 df = df.drop(Outliers_IQR, axis=0).reset_index(drop=True)
 
-Outliers_IQR_test = IQR(df_test, 1, numerical_columns)
+Outliers_IQR_test = find_outliers(df_test, 1, numerical_columns, iqr_bounds)
 df_test = df_test.drop(Outliers_IQR_test, axis=0).reset_index(drop=True)
 
 # масштабирование числовых признаков
