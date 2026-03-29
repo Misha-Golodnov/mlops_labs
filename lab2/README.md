@@ -25,7 +25,9 @@ lab2/
 ├── scripts/
 │   ├── load_and_split_wine_quality.py # Исходный скрипт (базовая обработка)
 │   ├── data_preprocessing.py          # Полная обработка данных ✨ НОВОЕ
-│   └── load_processed_data.py         # Утилита загрузки данных ✨ НОВОЕ
+│   ├── load_processed_data.py         # Утилита загрузки данных ✨ НОВОЕ
+│   ├── train_model.py                 # Обучение модели регрессии ✨ НОВОЕ
+│   └── evaluate_model.py              # Оценка модели на тесте ✨ НОВОЕ
 ├── Jenkinsfile                        # Pipeline конфигурация
 ├── requirements.txt                   # Python зависимости
 ├── README.md                          # Этот файл
@@ -70,6 +72,20 @@ lab2/
 - ✅ Информация о важности (feature_importance.csv)
 - ✅ Список признаков (important_features.txt)
 - ✅ Конфигурация обработки (preprocessing_config.json)
+
+### ✅ Этап 3: Обучение модели машинного обучения
+
+- ✅ Загрузка подготовленного тренировочного датасета
+- ✅ Обучение `RandomForestRegressor`
+- ✅ Сохранение модели в `pickle`
+- ✅ Подготовка CLI-скрипта для повторяемого запуска
+
+### ✅ Этап 4: Оценка качества модели
+
+- ✅ Загрузка сохраненной модели из `pickle`
+- ✅ Расчет метрик регрессии на тестовой выборке
+- ✅ Сохранение результатов оценки в JSON
+- ✅ Подготовка CLI-скрипта для повторяемого анализа качества
 
 ## Установка и запуск
 
@@ -128,6 +144,37 @@ print(f"Test samples: {summary['test_samples']}")
 
 # Загрузить scaler для предсказаний
 scaler = load_scaler()
+```
+
+### Обучение модели
+
+```bash
+python scripts/train_model.py
+```
+
+Модель обучается на `data/processed/X_train.csv` и `data/processed/y_train.csv`,
+после чего сохраняется в `data/processed/model.pkl`.
+
+При необходимости можно указать свой путь для артефакта:
+
+```bash
+python scripts/train_model.py --model-path data/processed/model.pkl
+```
+
+### Оценка модели
+
+```bash
+python scripts/evaluate_model.py
+```
+
+Скрипт загружает `data/processed/model.pkl`, использует `data/processed/X_test.csv`
+и `data/processed/y_test.csv`, после чего сохраняет JSON-отчет
+в `data/processed/model_metrics.json`.
+
+При необходимости можно указать свои пути:
+
+```bash
+python scripts/evaluate_model.py --model-path data/processed/model.pkl --metrics-path data/processed/model_metrics.json
 ```
 
 ## Структура данных
@@ -200,8 +247,6 @@ python scripts/data_preprocessing.py --random-state <YOUR_VALUE>
 
 ## Следующие этапы
 
-- [ ] Этап 3: Обучение модели машинного обучения
-- [ ] Этап 4: Оценка качества модели
 - [ ] Этап 5: Развертывание в Jenkins pipeline
 
 ## Автор

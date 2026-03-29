@@ -1,0 +1,12 @@
+{
+  "model_path": "C:\\Users\\FCKGQ\\Desktop\\learning\\mlops_labs\\lab2\\data\\processed\\model.pkl",
+  "model_type": "RandomForestRegressor",
+  "test_samples": 318,
+  "n_features": 11,
+  "metrics": {
+    "mae": 0.43128930817610056,
+    "mse": 0.3306751572327044,
+    "rmse": 0.5750436133309407,
+    "r2": 0.45389347726678864
+  }
+}
