@@ -1,0 +1,183 @@
+{
+  "preprocessing_metadata": {
+    "version": "1.0",
+    "dataset": "Wine Quality Red",
+    "source_url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+    "processing_date": "2026-03-29"
+  },
+  "data_statistics": {
+    "original_rows": 1599,
+    "original_features": 11,
+    "original_target_column": "quality",
+    "rows_after_preprocessing": 1589,
+    "features_removed": 0,
+    "outliers_removed": 10,
+    "missing_values": 0
+  },
+  "train_test_split": {
+    "method": "stratified_train_test_split",
+    "test_size": 0.2,
+    "random_state": 42,
+    "stratify_column": "quality",
+    "train_samples": 1271,
+    "test_samples": 318
+  },
+  "preprocessing_steps": [
+    {
+      "step": 1,
+      "name": "Handle Missing Values",
+      "method": "fill_with_median",
+      "parameters": {},
+      "missing_values_found": 0
+    },
+    {
+      "step": 2,
+      "name": "Remove Outliers",
+      "method": "z_score",
+      "parameters": {
+        "z_threshold": 3.0,
+        "column": "quality"
+      },
+      "outliers_removed": 10
+    },
+    {
+      "step": 3,
+      "name": "Feature Importance Analysis",
+      "method": "random_forest",
+      "parameters": {
+        "n_estimators": 100,
+        "random_state": 42,
+        "importance_threshold": 0.01
+      },
+      "features_selected": 11
+    },
+    {
+      "step": 4,
+      "name": "Feature Scaling",
+      "method": "StandardScaler",
+      "parameters": {
+        "with_mean": true,
+        "with_std": true
+      },
+      "description": "Z-score normalization: (x - mean) / std"
+    }
+  ],
+  "feature_importance": {
+    "scoring_method": "Random Forest Mean Decrease in Impurity",
+    "top_features": [
+      {
+        "rank": 1,
+        "name": "alcohol",
+        "importance": 0.27823,
+        "percentage": 27.82
+      },
+      {
+        "rank": 2,
+        "name": "sulphates",
+        "importance": 0.13957,
+        "percentage": 13.96
+      },
+      {
+        "rank": 3,
+        "name": "volatile acidity",
+        "importance": 0.11125,
+        "percentage": 11.13
+      },
+      {
+        "rank": 4,
+        "name": "total sulfur dioxide",
+        "importance": 0.08254,
+        "percentage": 8.25
+      },
+      {
+        "rank": 5,
+        "name": "chlorides",
+        "importance": 0.06496,
+        "percentage": 6.50
+      }
+    ]
+  },
+  "selected_features": [
+    "alcohol",
+    "sulphates",
+    "volatile acidity",
+    "total sulfur dioxide",
+    "chlorides",
+    "pH",
+    "residual sugar",
+    "density",
+    "citric acid",
+    "fixed acidity",
+    "free sulfur dioxide"
+  ],
+  "output_files": {
+    "X_train": {
+      "path": "data/processed/X_train.csv",
+      "rows": 1271,
+      "columns": 11,
+      "format": "CSV",
+      "delimiter": ","
+    },
+    "X_test": {
+      "path": "data/processed/X_test.csv",
+      "rows": 318,
+      "columns": 11,
+      "format": "CSV",
+      "delimiter": ","
+    },
+    "y_train": {
+      "path": "data/processed/y_train.csv",
+      "rows": 1271,
+      "columns": 1,
+      "format": "CSV",
+      "delimiter": ","
+    },
+    "y_test": {
+      "path": "data/processed/y_test.csv",
+      "rows": 318,
+      "columns": 1,
+      "format": "CSV",
+      "delimiter": ","
+    },
+    "scaler": {
+      "path": "data/processed/scaler.pkl",
+      "type": "sklearn.preprocessing.StandardScaler",
+      "format": "pickle",
+      "description": "Use this scaler to transform new data before making predictions"
+    },
+    "feature_importance": {
+      "path": "data/processed/feature_importance.csv",
+      "rows": 11,
+      "columns": 2,
+      "format": "CSV",
+      "delimiter": ",",
+      "column_names": ["feature", "importance"]
+    },
+    "important_features": {
+      "path": "data/processed/important_features.txt",
+      "rows": 11,
+      "format": "text",
+      "description": "List of selected features, one per line, in order of importance"
+    }
+  },
+  "usage_notes": {
+    "model_training": "Use X_train.csv and y_train.csv to train your model",
+    "model_evaluation": "Use X_test.csv and y_test.csv to evaluate model performance",
+    "preprocessing_new_data": [
+      "1. Load new data",
+      "2. Apply same preprocessing steps",
+      "3. Use scaler.pkl to scale features",
+      "4. Use important_features.txt to select columns",
+      "5. Make predictions"
+    ]
+  },
+  "reproducibility": {
+    "random_state": 42,
+    "python_version": "3.x",
+    "key_packages": {
+      "pandas": ">=2.0.0",
+      "scikit-learn": ">=1.3.0",
+      "numpy": ">=1.24.0"
+    }
+  }
+}
