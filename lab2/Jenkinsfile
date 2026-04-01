@@ -9,7 +9,7 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 dir('lab2') {
-                    sh 'python3 -m pip install --user -r requirements.txt'
+                    bat 'python -m pip install -r requirements.txt'
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline {
         stage('Load Wine Quality and split features') {
             steps {
                 dir('lab2') {
-                    sh 'python3 scripts/load_and_split_wine_quality.py'
+                    bat 'python scripts/load_and_split_wine_quality.py'
                 }
             }
         }
