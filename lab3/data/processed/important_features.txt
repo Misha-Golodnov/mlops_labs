@@ -1,0 +1,5 @@
+smoker_no
+smoker_yes
+bmi
+age
+children
