@@ -27,6 +27,8 @@
 - `data/processed/y_test.csv`
 - `data/processed/feature_importance.csv`
 - `data/processed/important_features.txt`
+- `data/processed/model.pkl`
+- `data/processed/model_metrics.json`
 
 ## Запуск
 
@@ -47,3 +49,25 @@ python scripts/data_preprocessing.py --test-size 0.25 --random-state 123
 ```bash
 python scripts/data_preprocessing.py --feature-threshold 0.02
 ```
+
+## Обучение модели
+
+```bash
+python scripts/train_model.py
+```
+
+Обучает `GradientBoostingRegressor` (n_estimators=300, lr=0.05, max_depth=5) и сохраняет модель в `data/processed/model.pkl`.
+
+## Оценка модели
+
+```bash
+python scripts/evaluate_model.py
+```
+
+Считает MAE, RMSE, R² на тестовой выборке и сохраняет отчёт в `data/processed/model_metrics.json`. Порог качества: R² >= 0.80.
+
+Результат на тестовой выборке (268 строк):
+
+- MAE: 2653
+- RMSE: 4900
+- R²: **0.845** — порог пройден
