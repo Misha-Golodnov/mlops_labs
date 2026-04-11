@@ -1,0 +1,12 @@
+{
+  "model": "GradientBoostingRegressor",
+  "test_size": 268,
+  "metrics": {
+    "mae": 2653.4226588295196,
+    "mse": 24010342.688845493,
+    "rmse": 4900.034968124768,
+    "r2": 0.8453427447803799
+  },
+  "quality_threshold_r2": 0.8,
+  "quality_pass": true
+}
