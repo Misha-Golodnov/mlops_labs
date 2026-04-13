@@ -71,3 +71,11 @@ python scripts/evaluate_model.py
 - MAE: 2653
 - RMSE: 4900
 - R²: **0.845** — порог пройден
+
+
+## Web app
+```
+pip install -r requirements.txt
+python scripts/train_model.py
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
