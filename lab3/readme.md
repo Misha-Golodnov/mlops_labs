@@ -1,8 +1,7 @@
 # Lab 3: Insurance Data Preprocessing
 
-В этой лабораторной используется локальный датасет `data/insurance.csv`.
-Скрипт предобработки выполняет базовую очистку данных, кодирует категориальные
-признаки, выделяет важные признаки и сохраняет разбиение на train/test.
+В этой лабораторной работе реализован полный ML-пайплайн для предсказания стоимости
+медицинской страховки: от предобработки данных до веб-приложения в Docker-контейнере.
 
 ## Что делает скрипт
 
@@ -78,4 +77,10 @@ python scripts/evaluate_model.py
 pip install -r requirements.txt
 python scripts/train_model.py
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+## Docker 
+```
+docker build -t medical-insurance-api .
+docker run -d -p 8000:8000 --name insurance-api medical-insurance-api
 ```
