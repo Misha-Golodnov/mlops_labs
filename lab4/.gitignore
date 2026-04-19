@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.venv/
+.env
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local    # ← важно! локальные секреты (ключа, service account)
+
+# Данные (не попадают в Git)
+data/
+*.csv
+*.xlsx
+*.parquet
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Секреты и ключи
+*.key
+*.pem
+*.json          # если там лежат service account ключи
+dvc-key.json    # конкретно ваш ключ
