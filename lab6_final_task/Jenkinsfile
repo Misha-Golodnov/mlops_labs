@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    options {
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                dir('lab6_final_task') {
+                    bat 'python -m pip install --upgrade pip'
+                    bat 'python -m pip install -r requirements.txt'
+                }
+            }
+        }
+
+        stage('Prepare dataset') {
+            steps {
+                dir('lab6_final_task') {
+                    bat 'python scripts/download_data.py'
+                }
+            }
+        }
+
+        stage('DVC status') {
+            steps {
+                dir('lab6_final_task') {
+                    bat 'dvc status'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Lab 6 CI/CD pipeline finished successfully.'
+        }
+        failure {
+            echo 'Lab 6 CI/CD pipeline failed. Check Python, DVC, and remote storage settings.'
+        }
+    }
+}

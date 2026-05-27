@@ -1,0 +1,4 @@
+pandas==2.2.2
+scikit-learn==1.5.1
+dvc==3.55.2
+dvc-gdrive==3.0.1

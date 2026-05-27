@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# DVC-tracked data artifacts
+/data/raw/*.csv
+/data/processed/*.csv
+/data/features/*.csv
+/models/*.pkl

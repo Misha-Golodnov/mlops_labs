@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+    site_cache_dir = .dvc/tmp/site_cache
+['remote "storage"']
+    url = gdrive://1rYkiqmmoJb6TJ0yMFHyb0AN1JvmIgE8T
