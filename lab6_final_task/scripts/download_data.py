@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any, cast
 
 from sklearn.datasets import fetch_california_housing
 
@@ -15,7 +16,7 @@ RAW_DATA_PATH = RAW_DATA_DIR / "california_housing.csv"
 def main() -> None:
     RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    dataset = fetch_california_housing(as_frame=True)
+    dataset = cast(Any, fetch_california_housing(as_frame=True, return_X_y=False))
     frame = dataset.frame
     frame.to_csv(RAW_DATA_PATH, index=False)
 
