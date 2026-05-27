@@ -1,0 +1,5 @@
+outs:
+- md5: 392861ea35b81b800ff239018b601008
+  size: 1910089
+  hash: md5
+  path: california_housing_clean.csv
